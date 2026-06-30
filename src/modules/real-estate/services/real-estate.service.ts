@@ -18,22 +18,19 @@ export class RealEstateService {
     return this.realEstateRepository.save(newPost);
   }
 
-  async findAll(page: number = 1, limit: number = 10, search?: string, type?: string, status?: string, category?: string) {
+  async findAll(page: number = 1, limit: number = 10, search?: string, status?: string) {
     const skip = (page - 1) * limit;
     
     // Build where conditions
     const whereBase: FindOptionsWhere<RealEstatePost> = {};
-    if (type) whereBase.type = type;
     if (status) whereBase.status = status;
-    if (category) whereBase.category = category;
 
     let where: FindOptionsWhere<RealEstatePost> | FindOptionsWhere<RealEstatePost>[] = whereBase;
 
-    // If search is provided, match either title OR address OR location
+    // If search is provided, match either title OR location
     if (search) {
       where = [
         { ...whereBase, title: ILike(`%${search}%`) },
-        { ...whereBase, address: ILike(`%${search}%`) },
         { ...whereBase, location: ILike(`%${search}%`) },
       ];
     }
