@@ -26,20 +26,15 @@ let RealEstateService = class RealEstateService {
         const newPost = this.realEstateRepository.create(createRealEstateDto);
         return this.realEstateRepository.save(newPost);
     }
-    async findAll(page = 1, limit = 10, search, type, status, category) {
+    async findAll(page = 1, limit = 10, search, status) {
         const skip = (page - 1) * limit;
         const whereBase = {};
-        if (type)
-            whereBase.type = type;
         if (status)
             whereBase.status = status;
-        if (category)
-            whereBase.category = category;
         let where = whereBase;
         if (search) {
             where = [
                 { ...whereBase, title: (0, typeorm_2.ILike)(`%${search}%`) },
-                { ...whereBase, address: (0, typeorm_2.ILike)(`%${search}%`) },
                 { ...whereBase, location: (0, typeorm_2.ILike)(`%${search}%`) },
             ];
         }
