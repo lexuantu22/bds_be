@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    container_name: real_estate_db
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: rootpassword
+      POSTGRES_DB: real_estate
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: real_estate_api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: root
+      DB_PASSWORD: rootpassword
+      DB_DATABASE: real_estate
+      JWT_SECRET: super-secret-key
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
