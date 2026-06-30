@@ -1,18 +1,5 @@
 version: '3.8'
 services:
-  db:
-    image: postgres:15
-    container_name: real_estate_db
-    restart: always
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: rootpassword
-      POSTGRES_DB: real_estate
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
   api:
     build: .
     container_name: real_estate_api
@@ -21,8 +8,6 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    depends_on:
-      - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
-volumes:
-  postgres_data:
