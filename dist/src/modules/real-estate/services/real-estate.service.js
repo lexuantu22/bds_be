@@ -26,8 +26,22 @@ let RealEstateService = class RealEstateService {
         const newPost = this.realEstateRepository.create(createRealEstateDto);
         return this.realEstateRepository.save(newPost);
     }
-    async findAll() {
-        return this.realEstateRepository.find({ order: { createdAt: 'DESC' } });
+    async findAll(page = 1, limit = 10) {
+        const skip = (page - 1) * limit;
+        const [data, total] = await this.realEstateRepository.findAndCount({
+            order: { createdAt: 'DESC' },
+            skip,
+            take: limit,
+        });
+        return {
+            data,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            },
+        };
     }
     async findOne(id) {
         const post = await this.realEstateRepository.findOne({ where: { id } });

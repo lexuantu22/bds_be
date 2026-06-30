@@ -8,6 +8,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { RealEstateService } from '../services/real-estate.service';
 import { CreateRealEstateDto } from '../dto/create-real-estate.dto';
@@ -39,9 +40,12 @@ export class RealEstateController {
 
   @Public()
   @Get()
-  @ApiOperation({ summary: 'Get all real estate posts' })
-  findAll() {
-    return this.realEstateService.findAll();
+  @ApiOperation({ summary: 'Get all real estate posts with pagination' })
+  findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.realEstateService.findAll(Number(page), Number(limit));
   }
 
   @Public()

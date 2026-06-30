@@ -18,8 +18,24 @@ export class RealEstateService {
     return this.realEstateRepository.save(newPost);
   }
 
-  async findAll(): Promise<RealEstatePost[]> {
-    return this.realEstateRepository.find({ order: { createdAt: 'DESC' } });
+  async findAll(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    
+    const [data, total] = await this.realEstateRepository.findAndCount({
+      order: { createdAt: 'DESC' },
+      skip,
+      take: limit,
+    });
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findOne(id: string): Promise<RealEstatePost> {
