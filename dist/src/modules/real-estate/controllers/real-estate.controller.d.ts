@@ -4,7 +4,7 @@ export declare class RealEstateController {
     private readonly realEstateService;
     constructor(realEstateService: RealEstateService);
     create(createRealEstateDto: CreateRealEstateDto): Promise<import("../entities/real-estate-post.entity").RealEstatePost>;
-    findAll(page?: number, limit?: number): Promise<{
+    findAll(page?: number, limit?: number, search?: string, type?: string, status?: string, category?: string): Promise<{
         data: import("../entities/real-estate-post.entity").RealEstatePost[];
         meta: {
             total: number;

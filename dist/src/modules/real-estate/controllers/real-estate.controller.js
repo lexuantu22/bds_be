@@ -27,8 +27,8 @@ let RealEstateController = class RealEstateController {
     create(createRealEstateDto) {
         return this.realEstateService.create(createRealEstateDto);
     }
-    findAll(page = 1, limit = 10) {
-        return this.realEstateService.findAll(Number(page), Number(limit));
+    findAll(page = 1, limit = 10, search, type, status, category) {
+        return this.realEstateService.findAll(Number(page), Number(limit), search, type, status, category);
     }
     findOne(id) {
         return this.realEstateService.findOne(id);
@@ -55,11 +55,15 @@ __decorate([
 __decorate([
     (0, public_decorator_1.Public)(),
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Get all real estate posts with pagination' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all real estate posts with pagination and filters' }),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
+    __param(2, (0, common_1.Query)('search')),
+    __param(3, (0, common_1.Query)('type')),
+    __param(4, (0, common_1.Query)('status')),
+    __param(5, (0, common_1.Query)('category')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:paramtypes", [Number, Number, String, String, String, String]),
     __metadata("design:returntype", void 0)
 ], RealEstateController.prototype, "findAll", null);
 __decorate([

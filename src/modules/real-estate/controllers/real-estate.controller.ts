@@ -40,12 +40,16 @@ export class RealEstateController {
 
   @Public()
   @Get()
-  @ApiOperation({ summary: 'Get all real estate posts with pagination' })
+  @ApiOperation({ summary: 'Get all real estate posts with pagination and filters' })
   findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
+    @Query('search') search?: string,
+    @Query('type') type?: string,
+    @Query('status') status?: string,
+    @Query('category') category?: string,
   ) {
-    return this.realEstateService.findAll(Number(page), Number(limit));
+    return this.realEstateService.findAll(Number(page), Number(limit), search, type, status, category);
   }
 
   @Public()

@@ -5,7 +5,7 @@ export declare class RealEstateService {
     private realEstateRepository;
     constructor(realEstateRepository: Repository<RealEstatePost>);
     create(createRealEstateDto: CreateRealEstateDto): Promise<RealEstatePost>;
-    findAll(page?: number, limit?: number): Promise<{
+    findAll(page?: number, limit?: number, search?: string, type?: string, status?: string, category?: string): Promise<{
         data: RealEstatePost[];
         meta: {
             total: number;
